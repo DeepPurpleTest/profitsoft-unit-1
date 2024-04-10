@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.service.impl;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.model.Project;
+import org.example.service.ReaderService;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @AllArgsConstructor
-public class ReaderService {
+public class ReaderServiceImpl implements ReaderService {
 
 	private final ObjectMapper objectMapper;
 

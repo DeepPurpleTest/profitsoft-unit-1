@@ -1,19 +1,27 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Model of application
+ * Projection of our json data
+ */
 @Data
 @ToString
 @NoArgsConstructor
-public class Test {
+public class Project {
 
-//	@JsonProperty("test-key")
-	private String test;
+	private String name;
 
-	@JsonProperty("test-annotation")
-	private String testAnnotation;
+	private String members;
+
+	private String tasks;
+
+	private String description;
+
+	@JsonProperty("begin_date")
+	private String beginDate;
 }

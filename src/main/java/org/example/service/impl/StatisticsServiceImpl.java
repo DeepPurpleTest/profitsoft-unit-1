@@ -1,30 +1,29 @@
-package org.example.service;
+package org.example.service.impl;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.example.model.Project;
 import org.example.model.xml.Item;
 import org.example.model.xml.Statistics;
+import org.example.service.StatisticsService;
+import org.example.util.ReflectionUtils;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class StatisticsService {
+public class StatisticsServiceImpl implements StatisticsService {
 
-	public Statistics createStatistics(Queue<Project> projectList, String attribute) {
+	public Statistics createStatistics(Queue<Project> projectList, String fieldName) {
 		Map<String, Long> statisticsMap = projectList.stream()
-				.map(project -> getFieldValueByAttribute(project, attribute))
+				.map(project -> ReflectionUtils.getFieldValue(project, fieldName))
 				.filter(Objects::nonNull)
-				.flatMap(attributeValue -> cutAttributeValue(String.valueOf(attributeValue)).stream())
+				.flatMap(fieldValue -> cutFieldValue(String.valueOf(fieldValue)).stream())
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
 		List<Item> items = statisticsMap.entrySet().stream()
@@ -38,33 +37,8 @@ public class StatisticsService {
 		return statistics;
 	}
 
-	private Object getFieldValueByAttribute(Project project, String attribute) {
-		try {
-			Optional<Field> fieldByAttribute = Arrays.stream(project.getClass().getDeclaredFields())
-					.filter(declaredField -> fieldExistsByAttribute(declaredField, attribute))
-					.findAny();
-
-			if (fieldByAttribute.isEmpty()) {
-				log.warn("No such field exception, return null value");
-				return null;
-			}
-
-			Field field = fieldByAttribute.get();
-			field.setAccessible(true);
-			return field.get(project);
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private boolean fieldExistsByAttribute(Field field, String attribute) {
-		return field.getName().equals(attribute)
-				|| (field.isAnnotationPresent(JsonProperty.class)
-				&& field.getAnnotation(JsonProperty.class).value().equals(attribute));
-	}
-
-	private List<String> cutAttributeValue(String attributeValue) {
-		return Arrays.stream(attributeValue.split(","))
+	private List<String> cutFieldValue(String fieldValue) {
+		return Arrays.stream(fieldValue.split(","))
 				.map(String::trim)
 				.toList();
 	}

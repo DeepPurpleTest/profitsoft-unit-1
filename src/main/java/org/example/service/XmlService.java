@@ -4,6 +4,9 @@ import org.example.model.xml.Statistics;
 
 import java.io.IOException;
 
-public interface XmlWriterService {
+/**
+ * Provides interface for work with xml files
+ */
+public interface XmlService {
 	void writeInFile(Statistics statistics, String attribute) throws IOException;
 }

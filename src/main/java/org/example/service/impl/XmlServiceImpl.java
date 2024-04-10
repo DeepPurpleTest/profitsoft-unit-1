@@ -4,14 +4,14 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.model.xml.Statistics;
-import org.example.service.XmlWriterService;
+import org.example.service.XmlService;
 
 import java.io.File;
 import java.io.IOException;
 
 @Slf4j
 @AllArgsConstructor
-public class XmlWriterServiceImpl implements XmlWriterService {
+public class XmlServiceImpl implements XmlService {
 
 	private final XmlMapper xmlMapper;
 
