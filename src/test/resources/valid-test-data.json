@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Project A",
+    "members": "John, Alice, Bob",
+    "tasks": "Task 1, Task 2, Task 3",
+    "description": "Description of Project A",
+    "begin_date": "2024-04-09"
+  },
+  {
+    "name": "Project B",
+    "members": "John, Emily, David, Alice",
+    "tasks": "Task 1, Task 4, Task 5",
+    "description": "Description of Project B",
+    "begin_date": "2024-04-10"
+  }
+]

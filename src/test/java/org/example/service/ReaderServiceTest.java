@@ -9,17 +9,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import util.DataUtils;
 
-import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static util.Data.getInvalidJsonData;
-import static util.Data.getValidJsonData;
 
 @ExtendWith(MockitoExtension.class)
 class ReaderServiceTest {
@@ -30,12 +30,24 @@ class ReaderServiceTest {
 	ObjectMapper objectMapper = new ObjectMapper();
 
 	@Test
+	void getStreamOfData_withRightPath_shouldReturnInputStream() throws FileNotFoundException {
+		InputStream inputStream = readerService.getStreamOfData("src/test/resources/valid-test-data.json");
+
+		assertNotNull(inputStream);
+	}
+
+	@Test
+	void getStreamOfData_withWrongPath_shouldThrowFileNotFoundException() {
+		assertThrows(FileNotFoundException.class, () -> readerService.getStreamOfData("src/test/resources/not-exist.json"));
+	}
+
+	@Test
 	void parseJson_withValidData_shouldReturnValidList() throws IOException {
 		// given
-		List<Project> projects = objectMapper.readValue(getValidJsonData(), new TypeReference<>() {});
-		InputStream inputStream = new ByteArrayInputStream(getValidJsonData().getBytes());
+		List<Project> projects = objectMapper.readValue(DataUtils.getResourceAsStream("/valid-test-data.json"), new TypeReference<>() {
+		});
 
-		List<Project> projectList = readerService.parseJson(inputStream);
+		List<Project> projectList = readerService.parseJson(DataUtils.getResourceAsStream("/valid-test-data.json"));
 
 		// then
 		assertEquals(projects.size(), projectList.size());
@@ -45,7 +57,7 @@ class ReaderServiceTest {
 	@Test
 	void parseJson_withInvalidData_shouldThrowIllegalStateException() {
 		// given
-		InputStream inputStream = new ByteArrayInputStream(getInvalidJsonData().getBytes());
+		InputStream inputStream = DataUtils.getResourceAsStream("/invalid-test-data.json");
 
 		// then
 		assertThrows(IllegalStateException.class, () -> readerService.parseJson(inputStream));
