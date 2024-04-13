@@ -20,21 +20,31 @@ import java.util.stream.Collectors;
 public class StatisticsServiceImpl implements StatisticsService {
 
 	public Statistics createStatistics(Queue<Project> projectList, String fieldName) {
-		Map<String, Long> statisticsMap = projectList.stream()
-				.map(project -> ReflectionUtils.getFieldValue(project, fieldName))
-				.filter(Objects::nonNull)
-				.flatMap(fieldValue -> cutFieldValue(String.valueOf(fieldValue)).stream())
-				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-
-		List<Item> items = statisticsMap.entrySet().stream()
-				.map(entry -> new Item(String.valueOf(entry.getKey()), entry.getValue().intValue()))
-				.sorted(Comparator.comparingInt(Item::getCount).reversed())
-				.toList();
+		Map<String, Long> statisticsMap = createStatisticsMap(projectList, fieldName);
+		List<Item> items = createItemsList(statisticsMap);
 
 		Statistics statistics = new Statistics();
 		statistics.setItems(items);
 
 		return statistics;
+	}
+
+	private Map<String, Long> createStatisticsMap(Queue<Project> projectList, String fieldName) {
+		return projectList.stream()
+				.map(project -> ReflectionUtils.getFieldValue(project, fieldName))
+				.filter(Objects::nonNull)
+				.flatMap(fieldValue -> cutFieldValue(String.valueOf(fieldValue)).stream())
+				.collect(Collectors.toMap(
+						Function.identity(),
+						entry -> 1L,
+						(existing, replacement) -> existing + 1L));
+	}
+
+	private List<Item> createItemsList(Map<String, Long> statisticsMap) {
+		return statisticsMap.entrySet().stream()
+				.map(entry -> new Item(String.valueOf(entry.getKey()), entry.getValue()))
+				.sorted(Comparator.comparingLong(Item::getCount).reversed())
+				.toList();
 	}
 
 	private List<String> cutFieldValue(String fieldValue) {

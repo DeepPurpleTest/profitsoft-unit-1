@@ -15,7 +15,13 @@ public class XmlServiceImpl implements XmlService {
 
 	private final XmlMapper xmlMapper;
 
-	public void writeInFile(Statistics statistics, String attribute) throws IOException {
-		xmlMapper.writeValue(new File("statistics_by_" + attribute + ".xml"), statistics);
+	public void writeInFile(Statistics statistics, String attribute) {
+		try {
+			xmlMapper.writeValue(new File("statistics_by_" + attribute + ".xml"), statistics);
+			log.info("Statistics is created!");
+		} catch (IOException e) {
+			log.error("Exception while writing in xml file");
+			throw new RuntimeException(e);
+		}
 	}
 }

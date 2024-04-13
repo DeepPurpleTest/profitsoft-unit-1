@@ -11,5 +11,5 @@ import lombok.Data;
 public class Item {
 
 	private String value;
-	private int count;
+	private Long count;
 }

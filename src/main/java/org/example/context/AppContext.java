@@ -25,10 +25,8 @@ import org.example.service.impl.XmlServiceImpl;
 public class AppContext {
 	private static final AppContext appContext = new AppContext();
 
-	@Getter
 	private final ObjectMapper objectMapper = objectMapper();
 
-	@Getter
 	private final XmlMapper xmlMapper = xmlMapper();
 
 	@Getter
@@ -38,14 +36,14 @@ public class AppContext {
 	private final ReaderService readerService = new ReaderServiceImpl(objectMapper);
 
 	@Getter
-	private final FileProcessor fileProcessor = new FileProcessorImpl();
+	private final FileProcessor fileProcessor = new FileProcessorImpl(readerService);
 
 	@Getter
 	private final StatisticsService statisticsService = new StatisticsServiceImpl();
 
 	@Getter
 	private final AppController appController = new AppController(statisticsService,
-			readerService, xmlService, fileProcessor);
+			xmlService, fileProcessor);
 
 
 	public static AppContext getInstance() {

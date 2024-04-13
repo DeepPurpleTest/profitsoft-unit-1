@@ -1,7 +1,7 @@
 [
   {
     "name": "Project A",
-    "members": "John, Alice, Bob",
+    "members": "John, Alice, Bob, Emily",
     "tasks": "Task 1, Task 2, Task 3",
     "description": "Description of Project A",
     "begin_date": "2024-04-09"
