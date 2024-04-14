@@ -18,8 +18,9 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public class FileProcessorImpl implements FileProcessor {
 
-	private final ReaderService readerService;
+	private final ReaderService<Project> readerService;
 
+	@Override
 	public List<File> getAllFilesByDirectoryPath(String directoryPath) {
 		File directory = new File(directoryPath);
 		return Stream.of(Objects.requireNonNull(directory.listFiles()))
@@ -27,11 +28,13 @@ public class FileProcessorImpl implements FileProcessor {
 				.toList();
 	}
 
+	@Override
 	public boolean isDirectoryPathValid(String directoryPath) {
 		File directory = new File(directoryPath);
 		return directory.exists() && directory.isDirectory();
 	}
 
+	@Override
 	public List<Project> extractDataFromFile(File file) {
 		List<Project> projectList = new ArrayList<>();
 

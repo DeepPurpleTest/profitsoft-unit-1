@@ -9,12 +9,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.controller.AppController;
+import org.example.model.Project;
 import org.example.processor.FileProcessor;
 import org.example.processor.impl.FileProcessorImpl;
 import org.example.service.ReaderService;
 import org.example.service.StatisticsService;
 import org.example.service.XmlService;
-import org.example.service.impl.ReaderServiceImpl;
+import org.example.service.impl.ProjectReaderServiceImpl;
 import org.example.service.impl.StatisticsServiceImpl;
 import org.example.service.impl.XmlServiceImpl;
 
@@ -33,7 +34,7 @@ public class AppContext {
 	private final XmlService xmlService = new XmlServiceImpl(xmlMapper);
 
 	@Getter
-	private final ReaderService readerService = new ReaderServiceImpl(objectMapper);
+	private final ReaderService<Project> readerService = new ProjectReaderServiceImpl(objectMapper);
 
 	@Getter
 	private final FileProcessor fileProcessor = new FileProcessorImpl(readerService);

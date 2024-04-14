@@ -3,7 +3,6 @@ package org.example.util;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.example.model.Project;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -45,11 +44,11 @@ public class ReflectionUtils {
 	}
 
 
-	public static Object getFieldValue(Project project, String fieldName) {
+	public static Object getFieldValue(Object object, String fieldName) {
 		try {
-			Field field = project.getClass().getDeclaredField(fieldName);
+			Field field = object.getClass().getDeclaredField(fieldName);
 			field.setAccessible(true);
-			return field.get(project);
+			return field.get(object);
 		} catch (IllegalAccessException e) {
 			log.error("Error during getting access to field: ", e);
 			throw new RuntimeException(e);

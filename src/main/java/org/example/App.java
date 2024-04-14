@@ -14,13 +14,16 @@ public class App {
 	public static void main(String[] args) {
 		log.info("Application -> start");
 
-		// TODO check arguments length
-		try {
-			APP_CONTROLLER.processData(args[0], args[1]);
-		} catch (NoSuchFileException e) {
-			log.error("Directory not found with path: {}", e.getMessage());
-		} catch (NoSuchFieldException e) {
-			log.error("Attribute not found: {}", e.getMessage());
+		if (args.length < 2) {
+			log.error("Not valid args length, please check readme");
+		} else {
+			try {
+				APP_CONTROLLER.processData(args[0], args[1]);
+			} catch (NoSuchFileException e) {
+				log.error("Directory not found with path: {}", e.getMessage());
+			} catch (NoSuchFieldException e) {
+				log.error("Attribute not found: {}", e.getMessage());
+			}
 		}
 	}
 }

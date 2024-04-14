@@ -3,7 +3,7 @@ package org.example.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.model.Project;
-import org.example.service.impl.ReaderServiceImpl;
+import org.example.service.impl.ProjectReaderServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,9 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
-class ReaderServiceTest {
+class ProjectReaderServiceTest {
 	@InjectMocks
-	ReaderServiceImpl readerService;
+	ProjectReaderServiceImpl readerService;
 
 	@Spy
 	ObjectMapper objectMapper = new ObjectMapper();

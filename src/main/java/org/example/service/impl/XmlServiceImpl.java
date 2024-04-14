@@ -15,6 +15,7 @@ public class XmlServiceImpl implements XmlService {
 
 	private final XmlMapper xmlMapper;
 
+	@Override
 	public void writeInFile(Statistics statistics, String attribute) {
 		try {
 			xmlMapper.writeValue(new File("statistics_by_" + attribute + ".xml"), statistics);

@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class StatisticsServiceImpl implements StatisticsService {
 
+	@Override
 	public Statistics createStatistics(Queue<Project> projectList, String fieldName) {
 		Map<String, Long> statisticsMap = createStatisticsMap(projectList, fieldName);
 		List<Item> items = createItemsList(statisticsMap);
