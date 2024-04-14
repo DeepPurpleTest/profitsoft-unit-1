@@ -1,25 +1,25 @@
-# Простое приложение для сбора статискии по определенному атрибуту.
+# Simple application for collecting statistics on a specific attribute.
 
-## Прежде чем запускать приложение нужно в настройках запуска указать два параметра:
-1. Путь до папки с json файлами которые будут считываться для сбора статистики.
-2. Атрибут по которому будет собираться статистика.
+## Before running the application, you need to specify two parameters in the run settings:
+1. The path to the folder containing the JSON files that will be read to collect statistics.
+2. The attribute by which the statistics will be collected.
 
-## Пример: 
+## Example:
 
 ![example](images/set-app-args.png)
 
-## В данном приложении предметной областью выбраны проекты и их участники, которые имеют такие свойства:
-1. name - название проекта
-2. members - участники проекта
-3. tasks - названия задач к выполнению на проекте
-4. description - описание проекта
-5. begin_data - дата начала проекта в формате "2024-05-12"
+## In this application, the domain area chosen is projects and their participants, which have the following properties:
+1. name - project name
+2. members - project members
+3. tasks - names of tasks to be performed on the project
+4. description - project description
+5. begin_date - the start date of the project in the format "2024-05-12"
 
-В проекте реализован сбор статистики если свойство будет записано перечислением через символ ","
-Все поля могут быть представлены как в единственном числе, так и в виде перечисления.
-Статистика в формате statistics_by_'attribute_name' будет добавлена в корень проекта.
+The application implements the collection of statistics if the property is written as a comma-separated list.
+All fields can be represented either in singular or as a list.
+Statistics in the format statistics_by_(attribute_name) will be added to the root of the project.
 
-## Пример статистики:
+## Example of statistics:
 ```xml
 <statistics>
   <items>
@@ -43,8 +43,8 @@
 </statistics>
 ```
 
-## Результаты изменения количества потоков:
-461 ms - 1 поток <br/>
-412 ms - 2 потока <br/>
-438 ms - 4 потока <br/>
-422 ms - 6 потоков <br/>
+## Results of changing the number of threads:
+461 ms - 1 thread <br/>
+412 ms - 2 threads <br/>
+438 ms - 4 threads <br/>
+422 ms - 6 threads <br/>
