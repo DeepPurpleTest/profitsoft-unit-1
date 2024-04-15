@@ -19,9 +19,9 @@ import static util.DataUtils.getValidStatistics;
 
 @ExtendWith(MockitoExtension.class)
 class StatisticsServiceTest {
-	StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
+	private final StatisticsServiceImpl statisticsService = new StatisticsServiceImpl();
 
-	ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 
 	@BeforeEach
 	void setUp() {

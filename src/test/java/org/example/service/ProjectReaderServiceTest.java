@@ -24,10 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 class ProjectReaderServiceTest {
 	@InjectMocks
-	ProjectReaderServiceImpl readerService;
+	private ProjectReaderServiceImpl readerService;
 
 	@Spy
-	ObjectMapper objectMapper = new ObjectMapper();
+	private ObjectMapper objectMapper = new ObjectMapper();
 
 	@Test
 	void getStreamOfData_withRightPath_shouldReturnInputStream() throws FileNotFoundException {
