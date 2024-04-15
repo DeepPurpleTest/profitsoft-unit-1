@@ -37,7 +37,7 @@ public class AppContext {
 	private final ReaderService<Project> readerService = new ProjectReaderServiceImpl(objectMapper);
 
 	@Getter
-	private final FileProcessor fileProcessor = new FileProcessorImpl(readerService);
+	private final FileProcessor<Project> fileProcessor = new FileProcessorImpl<>(readerService);
 
 	@Getter
 	private final StatisticsService statisticsService = new StatisticsServiceImpl();

@@ -27,7 +27,8 @@ public class AppController {
 
 	private final StatisticsService statisticsService;
 	private final XmlService xmlService;
-	private final FileProcessor fileProcessor;
+	private final FileProcessor<Project> fileProcessor;
+	private static final int THREAD_COUNT = 2;
 
 	public void processData(String directoryPath, String attribute) throws NoSuchFileException, NoSuchFieldException {
 		beforeDataProcessing(directoryPath, attribute);
@@ -36,12 +37,12 @@ public class AppController {
 		List<File> files = fileProcessor.getAllFilesByDirectoryPath(directoryPath);
 		LinkedBlockingQueue<Project> queue = new LinkedBlockingQueue<>();
 
-		ExecutorService executorService = Executors.newFixedThreadPool(2);
+		ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
 
 		List<CompletableFuture<Void>> futures = createFutures(files, queue, executorService);
 
 		CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-				.thenRunAsync(() -> createAndWriteStatistics(queue, fieldName))
+				.thenRunAsync(() -> createAndWriteStatistics(queue, fieldName, attribute))
 				.thenRun(executorService::shutdown);
 	}
 
@@ -63,8 +64,8 @@ public class AppController {
 				.toList();
 	}
 
-	private void createAndWriteStatistics(Queue<Project> projectList, String fieldName) {
+	private void createAndWriteStatistics(Queue<Project> projectList, String fieldName, String attribute) {
 		Statistics statistics = statisticsService.createStatistics(projectList, fieldName);
-		xmlService.writeInFile(statistics, fieldName);
+		xmlService.writeInFile(statistics, attribute);
 	}
 }

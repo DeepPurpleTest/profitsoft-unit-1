@@ -14,16 +14,21 @@ public class App {
 	public static void main(String[] args) {
 		log.info("Application -> start");
 
-		if (args.length < 2) {
+		if (!isArgumentLengthValid(args)) {
 			log.error("Not valid args length, please check readme");
-		} else {
-			try {
-				APP_CONTROLLER.processData(args[0], args[1]);
-			} catch (NoSuchFileException e) {
-				log.error("Directory not found with path: {}", e.getMessage());
-			} catch (NoSuchFieldException e) {
-				log.error("Attribute not found: {}", e.getMessage());
-			}
+			return;
 		}
+
+		try {
+			APP_CONTROLLER.processData(args[0], args[1]);
+		} catch (NoSuchFileException e) {
+			log.error("Directory not found with path: {}", e.getMessage());
+		} catch (NoSuchFieldException e) {
+			log.error("Attribute not found: {}", e.getMessage());
+		}
+	}
+
+	private static boolean isArgumentLengthValid(String[] args) {
+		return args.length == 2;
 	}
 }

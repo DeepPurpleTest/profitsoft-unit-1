@@ -36,11 +36,8 @@ public class ReflectionUtils {
 				.filter(declaredField -> isFieldExistsByAttribute(declaredField, attribute))
 				.findAny();
 
-		if (field.isEmpty()) {
-			throw new NoSuchFieldException();
-		}
-
-		return field.get().getName();
+		return field.orElseThrow(() -> new NoSuchFieldException("Field by attribute " + attribute + " not found"))
+				.getName();
 	}
 
 

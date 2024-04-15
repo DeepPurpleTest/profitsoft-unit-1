@@ -17,8 +17,10 @@ public class XmlServiceImpl implements XmlService {
 
 	@Override
 	public void writeInFile(Statistics statistics, String attribute) {
+		String fileName = String.format("statistics_by_%s.xml", attribute);
+
 		try {
-			xmlMapper.writeValue(new File("statistics_by_" + attribute + ".xml"), statistics);
+			xmlMapper.writeValue(new File(fileName), statistics);
 			log.info("Statistics is created!");
 		} catch (IOException e) {
 			log.error("Exception while writing in xml file");
